@@ -6,7 +6,7 @@ from uuid  import uuid4
 # Local imports
 from schemas import User
 from config import users
-from config.db import session, engine
+from config.db import session, engine, User as UserModel, Task as TaskModel
 
 
 user = APIRouter()
@@ -41,10 +41,11 @@ def get_user(id: str):
 @user.post('')
 def create_user(user: User):
     user.id = str(uuid4())
+    new_user = UserModel(**user.dict())
     # users.append(jsonable_encoder(user))
     # Agregar datos para el insert a la db
-    print(user)
-    session.add(user)
+    print(new_user)
+    session.add(new_user)
     session.commit()
 
 
